@@ -17,7 +17,7 @@ Every app implements the same API contract and passes the same 15-check [`load/c
 - **Production features on for everyone:** a structured JSON log line per request, Prometheus metrics, 10 s request/query timeouts, a 16-connection Postgres pool. Each framework on its defaults otherwise (crocket: workers follow the pool → 16).
 - **Load mix** ([`load/mix.lua`](load/mix.lua)): 80% `GET /heroes/{id}`, 10% `GET /heroes`, 5% `POST`, 5% `PUT`.
 - **Max throughput:** 3 × 30 s at an unreachable rate. **Load ramp:** wrk2 constant rate at 0.25×–1.15× of each app's own max, plus a common 4,000 req/s level, 3 × 30 s per level (latencies corrected for coordinated omission). Tables show median (min–max).
-- **Flamegraphs:** `perf` (async-profiler for the JVM) at 4,000 req/s and at saturation.
+- **Flamegraphs:** `perf` (async-profiler for the JVM) at 4,000 req/s and at saturation. crocket charts use a later FP-clean rebuild (static libstdc++, ubuntu:24.04 glibc with frame pointers); residual unresolvable frames folded for readability.
 - **Cold start:** container start to first `200` on `GET /heroes/1`, n=3. Memory is RSS at startup, idle and peak under load.
 
 ## Headline results

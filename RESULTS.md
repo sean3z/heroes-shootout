@@ -22,7 +22,7 @@
 - **One flaky mid-ramp sample:** crocket `ramp_0.5` rep 3 returned 128 non-2xx and multi-second latencies while the other two reps at the same rate were clean (p99 3.2–5.0 ms). Medians still include that outlier; treat the 0.5× p99 range as noisy. No matching failures at 0.7× or above on the other reps
 - **Postgres still near the ceiling** for crocket (66% of a c-4 at max). The gap to the others is if anything understated
 - **Three incomplete ramp steps** (rocket 1.15_r1, spring 1.0_r2, fastify 1.0_r2) lost their SSH session mid-step (box egress); those lines were dropped. The other 2 reps for each level remain
-- Flamegraph caveats: libc without frame pointers; Spring kernel share estimated from syscall leaves
+- crocket flamegraphs refreshed with statically linked libstdc++ on ubuntu:24.04 (glibc frame pointers + `libc6-dbg`); **other** at saturation 7.7%→3.3%. Residual libpq `[unknown]` frames folded in the published SVGs. Rocket/Spring/Fastify charts unchanged. Spring kernel share still estimated from syscall leaves
 
 ### Setup notes
 - crocket: main `63317f2`, **no** `CROCKET_WORKERS` override (defaults follow pool → 16)
@@ -97,8 +97,8 @@
 
 | Profile | handler | serialization | db_driver | framework | logging | metrics | runtime | kernel | other |
 |---|---|---|---|---|---|---|---|---|---|
-| crocket_common | 0.2 | 1.8 | 13.3 | 16.2 | 1.0 | 0.4 | 0.0 | 57.7 | 9.4 |
-| crocket_saturation | 0.3 | 2.2 | 14.5 | 14.4 | 1.0 | 0.3 | 0.0 | 59.6 | 7.7 |
+| crocket_common | 0.2 | 2.3 | 12.8 | 16.8 | 0.9 | 0.3 | 0.0 | 62.7 | 4.1 |
+| crocket_saturation | 0.2 | 3.0 | 14.8 | 15.6 | 0.9 | 0.3 | 0.0 | 61.8 | 3.3 |
 | fastify_common | 3.6 | 1.4 | 18.5 | 22.6 | 5.7 | 1.0 | 18.2 | 28.1 | 0.9 |
 | fastify_saturation | 4.9 | 2.1 | 22.9 | 22.9 | 7.3 | 1.4 | 19.6 | 17.9 | 0.9 |
 | rocket_common | 0.7 | 1.2 | 13.9 | 17.9 | 5.6 | 0.9 | 9.3 | 41.0 | 9.4 |
