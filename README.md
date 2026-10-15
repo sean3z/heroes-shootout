@@ -11,7 +11,7 @@ One Heroes CRUD API, four stacks, the same Postgres, the same load. This repo ho
 
 Every app implements the same API contract and passes the same 15-check [`load/conformance.sh`](load/conformance.sh) against the same seed data ([`init.sql`](init.sql)).
 
-## Methodology (run 2, Oct 15, 2026)
+## Methodology (Oct 15, 2026)
 
 - **Rig:** 3 × DigitalOcean `c-4` droplets (4 dedicated vCPUs each) in nyc1 on a private VPC: one for the app, one for PostgreSQL 16, one for the wrk2 load generator.
 - **Production features on for everyone:** a structured JSON log line per request, Prometheus metrics, 10 s request/query timeouts, a 16-connection Postgres pool. Each framework on its defaults otherwise (crocket: workers follow the pool → 16).
