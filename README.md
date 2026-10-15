@@ -49,7 +49,7 @@ Interactive SVGs (open in a browser to zoom and search):
 
 ## Caveats
 
-Single cloud region and machine size; Postgres sits near its ceiling for crocket at max, so crocket's gap is if anything understated. libc was profiled without frame pointers. See RESULTS.md for the rest.
+Single cloud region and machine size; Postgres sits near its ceiling for crocket at max, so crocket's gap is if anything understated. crocket flamegraphs were re-captured with frame pointers (static libstdc++, ubuntu:24.04 glibc); Rocket/Spring/Fastify charts are from the earlier pass. See RESULTS.md for the rest.
 
 ## License
 
